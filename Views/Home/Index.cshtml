@@ -1,37 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+	ViewData["Title"] = "Home";
 }
 
 <div class="container container-fluid text-center py-6">
-    <h1 class="display-4 mb-2">Seja bem vindo ao <span class="app-name"><span>TO</span>DO</span>!</h1>
-    <p class="lead mb-6">Um gerenciador de tarefas simples e intuitivo</p>
+	<h1 class="display-4 mb-2">Seja bem vindo ao <span class="app-name"><span>TO</span>DO</span>!</h1>
+	<p class="lead mb-6">Um gerenciador de tarefas simples e intuitivo</p>
 
-    <div class="container container-fluid text-center">
-        <button type="button" class="btn btn-primary bg-violet btn-lg">Cadastre-se</button>
-        <button type="button" class="btn btn-outline-primary btn-lg">Acesse</button>
-    </div>
+	<div class="container container-fluid text-center">
+		<a role="button" class="btn btn-primary bg-violet btn-lg" asp-controller="SignUp" asp-action="Index">Cadastre-se</a>
+		<a role="button" class="btn btn-outline-primary btn-lg" asp-controller="SignUp" asp-action="Index">Acesse</a>
+	</div>
 </div>
 
 <section class="container container-fluid  cards row justify-content-center align-items-center">
-    <div class="card col mx-4">
-        <img src="~/img/work-meeting.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-        </div>
-    </div>
-    <div class="card col mx-4">
-        <img src="~/img/work-meeting.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-        </div>
-    </div>
-    <div class="card col mx-4">
-        <img src="~/img/work-meeting.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-        </div>
-    </div>
+	<div class="card col mx-4">
+		<img src="~/img/work-meeting.jpg" class="card-img-top" alt="...">
+		<div class="card-body">
+			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+				content.</p>
+		</div>
+	</div>
+	<div class="card col mx-4">
+		<img src="~/img/work-meeting.jpg" class="card-img-top" alt="...">
+		<div class="card-body">
+			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+				content.</p>
+		</div>
+	</div>
+	<div class="card col mx-4">
+		<img src="~/img/work-meeting.jpg" class="card-img-top" alt="...">
+		<div class="card-body">
+			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+				content.</p>
+		</div>
+	</div>
 </section>

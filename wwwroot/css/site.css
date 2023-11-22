@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Victor+Mono:wght@100;300;400;600;700&display=swap");
+
 html {
   font-size: 14px;
 }
@@ -8,7 +10,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -19,4 +25,48 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.app-name {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #0e0e0e;
+}
+
+.app-name span {
+  color: #7a3cf4;
+}
+
+.card-img-top {
+  width: 100%;
+  border-radius: 3px;
+  filter: brightness(0.8);
+  transition: 100ms;
+}
+
+.card {
+  padding: 0;
+  max-width: 17rem;
+
+  &:hover {
+    > .card-img-top {
+      filter: brightness(0.75);
+    }
+  }
+}
+
+main > .container-fluid {
+  min-height: 30vh;
+  padding: 3rem 0;
+  margin: auto;
+}
+
+@media (max-width: 430px) {
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    margin: 0.75rem 0;
+  }
 }

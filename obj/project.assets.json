@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ariel\\Workspace\\memory-game\\todo\\todo.csproj",
+      "projectUniqueName": "C:\\Users\\ariel\\Workspace\\todo\\todo.csproj",
       "projectName": "todo",
-      "projectPath": "C:\\Users\\ariel\\Workspace\\memory-game\\todo\\todo.csproj",
+      "projectPath": "C:\\Users\\ariel\\Workspace\\todo\\todo.csproj",
       "packagesPath": "C:\\Users\\ariel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ariel\\Workspace\\memory-game\\todo\\obj\\",
+      "outputPath": "C:\\Users\\ariel\\Workspace\\todo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ariel\\AppData\\Roaming\\NuGet\\NuGet.Config"

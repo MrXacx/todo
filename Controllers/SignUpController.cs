@@ -18,6 +18,12 @@ public class SignUpController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult Index(UserModel user)
+    {
+        return RedirectToAction("Index", user);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

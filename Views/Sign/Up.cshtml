@@ -2,27 +2,20 @@
 
 @{
     ViewData["Title"] = "Cadastro";
-
-    var InvalidNameMessage = "";
-    var InvalidEmailMessage = "";
-    var InvalidPasswordMessage = "";
 }
 <form class="container container-sm text-center" asp-controller="Sign" asp-action="Up" method="post">
     <div class="form-floating mb-3">
-        <input asp-for="Name" type="text" class="form-control @(InvalidNameMessage.Length > 0 ? "is-invalid" : "")"
-            id="nameInput">
-        <label for="nameInput">@(InvalidNameMessage.Length > 0 ? InvalidNameMessage : "Nome")</label>
+        <input asp-for="Name" type="text" class="form-control" id="nameInput">
+        <label for="nameInput">Nome</label>
     </div>
     <div class="form-floating mb-3">
-        <input asp-for="Email" type="email" class="form-control @(InvalidEmailMessage.Length > 0 ? "is-invalid" : "")"
-            id="emailInput">
-        <label for="emailInput">@(InvalidEmailMessage.Length > 0 ? InvalidEmailMessage : "Email")</label>
+        <input asp-for="Email" type="email" class="form-control" id="emailInput">
+        <label for="emailInput">Email</label>
     </div>
     <div class="form-floating mb-3">
-        <input asp-for="Password" type="password"
-            class="form-control @(InvalidPasswordMessage.Length > 0 ? "is-invalid" : "")" id="passwordInput">
-        <label for="passwordInput">@(InvalidPasswordMessage.Length > 0 ? InvalidPasswordMessage : "Senha")</label>
+        <input asp-for="Password" type="password" class="form-control" id="passwordInput">
+        <label for="passwordInput">Senha</label>
     </div>
 
-    <button type="button" class="btn btn-primary btn-lg">Cadastrar</button>
+    <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
 </form>

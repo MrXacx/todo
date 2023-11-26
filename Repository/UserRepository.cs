@@ -45,4 +45,9 @@ public class UserRepository : ITodoRepository<UserModel>
         context.Users.Remove(RetrievedUser);
         return context.SaveChanges() == 1;
     }
+
+    public UserModel ReadByCredentials(UserModel User)
+    {
+        return context.Users.FirstOrDefault((X) => X.Email == User.Email && X.Password == User.Password) ?? throw new NoContentRetrieveException();
+    }
 }

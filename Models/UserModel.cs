@@ -3,14 +3,11 @@ namespace todo.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 [Index(propertyNames: ["Email"], IsUnique = true, Name = "IX_User_Email")]
-public class UserModel
+public class UserModel : IModel
 {
-    public int Id { get; set; }
 
     [MinLength(3)]
     [MaxLength(30)]

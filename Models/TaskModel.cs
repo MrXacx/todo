@@ -1,16 +1,11 @@
 namespace todo.Models;
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Build.Framework;
 
-public class TaskModel
+public class TaskModel : IModel
 {
-    public int Id { get; set; }
 
     [ForeignKey(nameof(UserModel))]
     public required int AuthorId { get; set; }

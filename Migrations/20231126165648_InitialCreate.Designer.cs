@@ -11,7 +11,7 @@ using todo.Data;
 namespace todo.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20231126163000_InitialCreate")]
+    [Migration("20231126165648_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

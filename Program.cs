@@ -3,6 +3,7 @@ using todo.Data;
 using Microsoft.Extensions.DependencyInjection;
 using todo.Repository;
 using todo.Models;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<TodoContext>(opt =>
 
 builder.Services.AddScoped<ITodoRepository<UserModel>, UserRepository>();
 builder.Services.AddScoped<ITodoRepository<TaskModel>, TaskRepository>();
+
+builder.Services.AddSession();
+builder.Services.AddSingleton<ITempDataProvider, SessionStateTempDataProvider>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -35,4 +39,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseSession();
 app.Run();

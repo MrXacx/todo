@@ -6,5 +6,5 @@ interface ITodoRepository<Model> where Model : IModel // Abstrai interface para 
     Model Create(Model Model);
     Model Read(int Id);
     Model Update(Model Model);
-    bool Delete(Model Model);
+    bool Delete(int Id);
 }

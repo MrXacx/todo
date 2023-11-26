@@ -7,7 +7,7 @@ public class TodoContext : DbContext
 {
     public TodoContext(DbContextOptions<TodoContext> options) : base(options) { }
 
-    public DbSet<UserModel> users { get; set; }
-    public DbSet<TaskModel> tasks { get; set; }
+    public DbSet<UserModel> Users { get; set; }
+    public DbSet<TaskModel> Tasks { get; set; }
 
 }

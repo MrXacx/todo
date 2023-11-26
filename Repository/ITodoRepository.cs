@@ -1,10 +1,11 @@
+namespace todo.Repository;
 using todo.Models;
 
-interface ITodoRepository
+interface ITodoRepository<Model> where Model : IModel // Abstrai interface para receber e retornar qualquer implementação de IModel
 {
-    IModel create(IModel model);
-    IModel read(int Id);
-    List<IModel> list(IModel model);
-    IModel update(IModel model);
-    bool delete(IModel model);
+    Model create(Model model);
+    Model read(int Id);
+    List<Model> list(Model model);
+    Model update(Model model);
+    bool delete(Model model);
 }

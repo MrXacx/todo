@@ -4,24 +4,32 @@ using todo.Models;
 
 namespace todo.Controllers;
 
-public class SignUpController : Controller
+public class SignController : Controller
 {
-    private readonly ILogger<SignUpController> _logger;
+    private readonly ILogger<SignController> _logger;
 
-    public SignUpController(ILogger<SignUpController> logger)
+    public SignController(ILogger<SignController> logger)
     {
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult In()
     {
         return View();
     }
 
-    [HttpPost]
-    public IActionResult Index(UserModel user)
+    public IActionResult Up()
     {
-        return RedirectToAction("Index", user);
+        return View();
+    }
+
+  [HttpPost]
+    public IActionResult Up(UserModel User)
+    {
+        if(ModelState.IsValid){
+            return RedirectToAction("In", User);
+        }
+        return View(User);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

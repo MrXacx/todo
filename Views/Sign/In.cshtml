@@ -1,0 +1,22 @@
+@model UserModel
+
+@{
+    ViewData["Title"] = "Cadastro";
+    var InvalidEmailMessage = "";
+    var InvalidPasswordMessage = "";
+}
+
+<form class="container container-sm text-center" asp-controller="SignIn" asp-action="In" method="POST">
+    <div class="form-floating mb-3">
+        <input type="email" asp-for="Email" class="form-control @(InvalidEmailMessage.Length > 0 ? "is-invalid" : "")"
+            id="emailInput">
+        <label for="emailInput">@(InvalidEmailMessage.Length > 0 ? InvalidEmailMessage : "Email")</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" asp-for="Password"
+            class="form-control @(InvalidPasswordMessage.Length > 0 ? "is-invalid" : "")" id="passwordInput">
+        <label for="passwordInput">@(InvalidPasswordMessage.Length > 0 ? InvalidPasswordMessage : "Senha")</label>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg">Acessar</button>
+</form>

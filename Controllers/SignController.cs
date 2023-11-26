@@ -18,18 +18,34 @@ public class SignController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult In(UserModel User)
+    {
+        if (ModelState.IsValid)
+        {
+            return RedirectToAction("Index", "Task");
+        }
+
+        ViewBag.Error = "Model inválida";
+        return View();
+    }
+
     public IActionResult Up()
     {
         return View();
     }
 
-  [HttpPost]
+    [HttpPost]
     public IActionResult Up(UserModel User)
     {
-        if(ModelState.IsValid){
-            return RedirectToAction("In", User);
+        if (ModelState.IsValid)
+        {
+            return RedirectToActionPreserveMethod("In", routeValues: User);
         }
-        return View(User);
+
+        ViewBag.Error = "Model inválida";
+
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

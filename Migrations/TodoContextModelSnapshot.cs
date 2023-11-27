@@ -41,11 +41,14 @@ namespace todo.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<int?>("UserModelId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("UserModelId");
 
-                    b.ToTable("tasks");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("todo.Models.UserModel", b =>
@@ -59,7 +62,6 @@ namespace todo.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
@@ -73,18 +75,14 @@ namespace todo.Migrations
                     b.HasIndex(new[] { "Email" }, "IX_User_Email")
                         .IsUnique();
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("todo.Models.TaskModel", b =>
                 {
-                    b.HasOne("todo.Models.UserModel", "Author")
+                    b.HasOne("todo.Models.UserModel", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
+                        .HasForeignKey("UserModelId");
                 });
 
             modelBuilder.Entity("todo.Models.UserModel", b =>

@@ -10,8 +10,6 @@ public class TaskModel : IModel
     [ForeignKey(nameof(UserModel))]
     public required int AuthorId { get; set; }
 
-    public required UserModel Author { get; set; }
-
     public DateTime Date { get; set; } = DateTime.Now;
 
     [MinLength(3)]

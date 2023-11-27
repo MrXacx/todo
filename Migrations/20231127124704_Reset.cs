@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace todo.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Reset : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,12 +14,12 @@ namespace todo.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
+                    Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Email = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -28,12 +28,12 @@ namespace todo.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tasks",
+                name: "Tasks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,28 +43,28 @@ namespace todo.Migrations
                     Title = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Text = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tasks", x => x.Id);
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tasks_users_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Tasks_Users_UserModelId",
+                        column: x => x.UserModelId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tasks_AuthorId",
-                table: "tasks",
-                column: "AuthorId");
+                name: "IX_Tasks_UserModelId",
+                table: "Tasks",
+                column: "UserModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_Email",
-                table: "users",
+                table: "Users",
                 column: "Email",
                 unique: true);
         }
@@ -72,10 +72,10 @@ namespace todo.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "tasks");
+                name: "Tasks");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
         }
     }
 }

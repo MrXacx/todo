@@ -19,17 +19,16 @@ public class TaskController : Controller
         _AuthorRepository = (UserRepository)authorRepository;
     }
 
-    public IActionResult Index(int authorId)
+    public IActionResult Index(int author)
     {
-        var User = _AuthorRepository.Read(authorId);
+        var User = _AuthorRepository.Read(author);
         User.Tasks = _TaskRepository.List(User.Id);
 
-        ViewBag.UserName = User.Name;
-        return View(User.Tasks);
+        return View(User);
     }
 
     [HttpPost]
-    public IActionResult Create(TaskModel Task)
+    public IActionResult Create()
     {
         return RedirectToAction("Index");
     }

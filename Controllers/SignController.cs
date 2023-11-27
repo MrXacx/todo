@@ -30,7 +30,7 @@ public class SignController : Controller
             try
             {
                 var id = _repository?.ReadByCredentials(User).Id ?? throw new NoContentRetrieveException();
-                return RedirectToAction("Index", "Task", routeValues: new { authorId = id });
+                return RedirectToAction("Index", "Task", routeValues: new { author = id });
             }
             catch (NoContentRetrieveException)
             {

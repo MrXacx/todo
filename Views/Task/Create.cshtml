@@ -1,0 +1,17 @@
+@model TaskModel
+@{
+    ViewBag.Title = "Nova Tarefa";
+}
+
+<nav class="nav">
+    <span class="nav-link disabled" aria-disabled="true">Olá, @ViewBag.UserName!</span>
+    <a class="nav-link active" asp-controller="Task" asp-action="Create">Nova Tarefa</a>
+    <a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-id="@ViewBag.UserId">Suas Tarefas</a>
+</nav>
+
+<form class="container container-sm text-center" asp-controller="Task" asp-action="Create" method="post">
+    <input type="hidden" asp-for="AuthorId" value="@ViewBag.UserId" />
+    <input class="modal-title form-control" asp-for="Title" placeholder="Título da tarefa" />
+    <textarea class="modal-body form-control" asp-for="Text" placeholder="Descreva sua tarefa aqui."></textarea>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>

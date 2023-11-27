@@ -4,28 +4,12 @@
 	ViewData["Title"] = "Tarefas";
 	int TaskCounter = 0;
 }
+
 <nav class="nav">
 	<span class="nav-link disabled" aria-disabled="true">Olá, @Model.Name!</span>
-	<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Nova Tarefa</a>
+	<a class="nav-link active" asp-controller="Task" asp-action="Create">Nova Tarefa</a>
+	<a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-id="@Model.Id">Suas Tarefas</a>
 </nav>
-
-<div class="modal fade" id="staticBackdrop" aria-labelledby="staticBackdrop" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-
-		<form class="modal-content">
-			<div class="modal-header">
-				<input class="modal-title form-control" name="Title" placeholder="Título da tarefa" />
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<textarea class="modal-body form-control" name="Text" placeholder="Descreva sua tarefa aqui."></textarea>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary">Salvar</button>
-			</div>
-		</form>
-
-	</div>
-</div>
 
 <section class="row justify-content-space-evenly">
 	@foreach (TaskModel Task in Model.Tasks)
@@ -35,34 +19,32 @@
 				<h5 class="card-title">@Task.Title</h5>
 				<h6 class="card-subtitle mb-2 text-body-secondary">#@($"#${TaskCounter}")</h6>
 				<p class="card-text">@Task.Text?.Substring(0, 20)</p>
-				<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-					aria-controls="offcanvasExample">
+				<a class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+					aria-controls="staticBackdrop" asp-controller="Task" asp-action="SelectTask" asp-route-task="@Task.Id">
 					Ver mais
-				</button>
+				</a>
 			</div>
 		</div>
 	}
 </section>
 
-<aside class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-	<div class="offcanvas-header">
-		<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-	</div>
-	<div class="offcanvas-body">
-		<div>
-			Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
-			etc.
-		</div>
-		<div class="dropdown mt-3">
-			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-				Dropdown button
-			</button>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
-			</ul>
+
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdrop"
+	aria-hidden="@(ViewBag.SelectedTask == null)">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">@ViewBag.SelectedTask.Title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>@ViewBag.SelectedTask.Title</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a role="button" class="btn btn-danger" asp-controller="Task" asp-action="Delete"
+					asp-route-task="@ViewBag.SelectedTask.Id">Finalizar</a>
+			</div>
 		</div>
 	</div>
-</aside>
+</div>

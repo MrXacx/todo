@@ -21,5 +21,4 @@ public class TaskModel : IModel
     [MinLength(10)]
     [MaxLength(300)]
     public required string Text { get; set; }
-
 }

@@ -11,8 +11,7 @@ public class UserModel : IModel
 
     [MinLength(3)]
     [MaxLength(30)]
-    public required string Name { get; set; }
-
+    public string? Name { get; set; }
 
     public required string Email { get; set; }
 

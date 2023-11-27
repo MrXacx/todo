@@ -61,6 +61,21 @@ main > .container-fluid {
   margin: auto;
 }
 
+.modal .form-control {
+  box-shadow: none;
+  border: none;
+
+  &:focus {
+    box-shadow: none;
+    outline: none;
+    border: none;
+  }
+}
+
+.modal textarea {
+  max-height: 270px;
+}
+
 @media (max-width: 430px) {
   .cards {
     flex-direction: column;

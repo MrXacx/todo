@@ -1,12 +1,34 @@
-@model List<TaskModel>
+@model UserModel
 
 @{
 	ViewData["Title"] = "Tarefas";
 	int TaskCounter = 0;
 }
+<nav class="nav">
+	<span class="nav-link disabled" aria-disabled="true">Olá, @Model.Name!</span>
+	<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Nova Tarefa</a>
+</nav>
+
+<div class="modal fade" id="staticBackdrop" aria-labelledby="staticBackdrop" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+
+		<form class="modal-content">
+			<div class="modal-header">
+				<input class="modal-title form-control" name="Title" placeholder="Título da tarefa" />
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<textarea class="modal-body form-control" name="Text" placeholder="Descreva sua tarefa aqui."></textarea>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary">Salvar</button>
+			</div>
+		</form>
+
+	</div>
+</div>
 
 <section class="row justify-content-space-evenly">
-	@foreach (TaskModel Task in @Model)
+	@foreach (TaskModel Task in Model.Tasks)
 	{
 		<div class="card" style="width: 18rem;">
 			<div class="card-body">

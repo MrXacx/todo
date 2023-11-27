@@ -47,3 +47,20 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+#staticBackdrop {
+  .form-control {
+    box-shadow: none;
+    border: none;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  > textarea {
+    min-height: 150px;
+    max-height: 250px;
+  }
+}

@@ -12,29 +12,19 @@
 </head>
 
 <body>
-	<header class="container-fluid border-bottom py-2 mb-3 row">
-		<nav class=" nav px-2">
-			<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-				<img src="~/img/TODO.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-center">
-				<span class=" app-name"><span>TO</span>DO</span>
-			</a>
-			@if (ViewBag.UserName != null)
-			{
-				<a class="nav-link" href="#">Suas Tarefas</a>
-				<a class="nav-link" href="#">Nova Tarefa</a>
-				<span class="nav-link disabled" aria-disabled="true">Olá, @ViewBag.UserName!</span>
-
-			}
-		</nav>
-	</header>
+	<nav class="container-fluid border-bottom py-2 mb-3 row nav px-2">
+		<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+			<img src="~/img/TODO.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-center">
+			<span class=" app-name"><span>TO</span>DO</span>
+		</a>
 	</nav>
-
 
 	<div class="container justify-content-center">
 		<main role="main" class="pb-3">
 			@RenderBody()
 		</main>
 	</div>
+
 
 	<footer class="border-top footer text-muted text-center">
 		<div class="container">

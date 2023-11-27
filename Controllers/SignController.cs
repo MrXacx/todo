@@ -1,16 +1,20 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using todo.Exceptions;
 using todo.Models;
+using todo.Repository;
 
 namespace todo.Controllers;
 
 public class SignController : Controller
 {
     private readonly ILogger<SignController> _logger;
+    private readonly UserRepository _repository;
 
-    public SignController(ILogger<SignController> logger)
+    public SignController(ITodoRepository<UserModel> repository, ILogger<SignController> logger)
     {
         _logger = logger;
+        _repository = (UserRepository)repository;
     }
 
     public IActionResult In()
@@ -23,10 +27,17 @@ public class SignController : Controller
     {
         if (ModelState.IsValid)
         {
-            return RedirectToAction("Index", "Task");
+            try
+            {
+                var id = _repository?.ReadByCredentials(User).Id ?? throw new NoContentRetrieveException();
+                return RedirectToAction("Index", "Task", routeValues: new { authorId = id });
+            }
+            catch (NoContentRetrieveException)
+            {
+                ViewBag.Error = "Email e/ou senha estão incorretos.";
+            }
         }
-
-        ViewBag.Error = "Model inválida";
+        else ViewBag.Error = "Preencha todos os campos.";
         return View();
     }
 
@@ -40,10 +51,16 @@ public class SignController : Controller
     {
         if (ModelState.IsValid)
         {
-            return RedirectToActionPreserveMethod("In", routeValues: User);
+            try
+            {
+                return RedirectToActionPreserveMethod("In", routeValues: _repository?.Create(User));
+            }
+            catch (NoContentRetrieveException)
+            {
+                ViewBag.Error = "Não foi possível criar uma conta.";
+            }
         }
-
-        ViewBag.Error = "Model inválida";
+        else ViewBag.Error = "Preencha todos os campos.";
 
         return View();
     }

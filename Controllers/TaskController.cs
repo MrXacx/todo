@@ -1,21 +1,31 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using todo.Exceptions;
 using todo.Models;
+using todo.Repository;
 
 namespace todo.Controllers;
 
 public class TaskController : Controller
 {
     private readonly ILogger<TaskController> _logger;
+    private readonly UserRepository _AuthorRepository;
+    private readonly TaskRepository _TaskRepository;
 
-    public TaskController(ILogger<TaskController> logger)
+    public TaskController(ITodoRepository<TaskModel> taskRepository, ITodoRepository<UserModel> authorRepository, ILogger<TaskController> logger)
     {
         _logger = logger;
+        _TaskRepository = (TaskRepository)taskRepository;
+        _AuthorRepository = (UserRepository)authorRepository;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(int authorId)
     {
-        return View(new List<TaskModel>());
+        var User = _AuthorRepository.Read(authorId);
+        User.Tasks = _TaskRepository.List(User.Id);
+
+        ViewBag.UserName = User.Name;
+        return View(User.Tasks);
     }
 
     [HttpPost]

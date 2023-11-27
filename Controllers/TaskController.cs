@@ -24,24 +24,57 @@ public class TaskController : Controller
         var User = _AuthorRepository.Read(author);
         User.Tasks = _TaskRepository.List(User.Id);
 
+        if (TempData.TryGetValue("selected_task", out object? task))
+        {
+            ViewBag.SelectedTask = _TaskRepository.Read((int?)task ?? 0);
+        }
+
         return View(User);
     }
 
-    [HttpPost]
-    public IActionResult Create()
+    public IActionResult Create(int author)
     {
-        return RedirectToAction("Index");
+        ViewBag.UserName = _AuthorRepository.Read(author).Name;
+        ViewBag.UserId = author;
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Create(TaskModel Task)
+    {
+        Task = _TaskRepository.Create(Task);
+        return RedirectToAction("Index", new { author = Task.AuthorId });
+    }
+
+    public IActionResult Update(int task)
+    {
+        var Task = _TaskRepository.Read(task);
+        ViewBag.UserName = _AuthorRepository.Read(Task.AuthorId).Name;
+
+        return View(Task);
     }
 
     [HttpPost]
     public IActionResult Update(TaskModel Task)
     {
-        return RedirectToAction("Index");
+        if (ModelState.IsValid)
+        {
+            Task = _TaskRepository.Update(Task);
+            return RedirectToAction("Index", new { author = Task.AuthorId });
+        }
+
+        return View(Task);
     }
 
-    [HttpPost]
-    public IActionResult Delete(TaskModel Task)
+    public RedirectToActionResult Select(int task)
     {
+        TempData["selected_task"] = task;
+        return RedirectToAction("Index", new { author = _TaskRepository.Read(task).AuthorId });
+    }
+
+    public IActionResult Delete(int task)
+    {
+        ViewBag.Error = _TaskRepository.Delete(task) ? null : "Não foi possível deletar a tarefa";
         return RedirectToAction("Index");
     }
 

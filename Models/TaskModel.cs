@@ -12,7 +12,6 @@ public class TaskModel : IModel
 
     public DateTime Date { get; set; } = DateTime.Now;
 
-    [MinLength(10)]
     [MaxLength(300)]
     public required string Content { get; set; }
 }

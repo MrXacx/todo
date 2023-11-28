@@ -25,6 +25,10 @@ public class UserRepository : ITodoRepository<UserModel>
         return context.Users.FirstOrDefault((User) => User.Id == Id) ?? throw new NoContentRetrieveException();
     }
 
+    public int ReadEmail(string Email)
+    {
+        return context.Users.ToList().Find((U) => U.Email == Email)?.Id ?? throw new NoContentRetrieveException();
+    }
     public UserModel Update(UserModel User)
     {
         var RetrievedUser = Read(User.Id);

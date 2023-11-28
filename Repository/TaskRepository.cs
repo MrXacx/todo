@@ -24,9 +24,9 @@ public class TaskRepository : ITodoRepository<TaskModel>
     {
         return context.Tasks.FirstOrDefault((Task) => Task.Id == Id) ?? throw new NoContentRetrieveException();
     }
-    public List<TaskModel> List(int AuthorId)
+    public List<TaskModel> List(int BoardId)
     {
-        return context.Tasks.ToList();
+        return (List<TaskModel>)context.Tasks.ToList().Where((T) => T.BoardId == BoardId);
     }
 
     public TaskModel Update(TaskModel Task)

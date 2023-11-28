@@ -26,7 +26,7 @@ public class TaskRepository : ITodoRepository<TaskModel>
     }
     public List<TaskModel> List(int BoardId)
     {
-        return (List<TaskModel>)context.Tasks.ToList().Where((T) => T.BoardId == BoardId);
+        return context.Tasks.ToList().FindAll((T) => T.BoardId == BoardId);
     }
 
     public TaskModel Update(TaskModel Task)

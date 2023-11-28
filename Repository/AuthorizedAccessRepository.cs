@@ -27,7 +27,7 @@ public class AuthorizedAccessRepository : ITodoRepository<AuthorizedAccessModel>
 
     public List<AuthorizedAccessModel> List(int BoardId)
     {
-        return (List<AuthorizedAccessModel>)context.AuthAcesss.ToList().Where((A) => A.Board == BoardId);
+        return context.AuthAcesss.ToList().FindAll((A) => A.Board == BoardId);
     }
 
     public bool Delete(int Id)

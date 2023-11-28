@@ -26,7 +26,7 @@ public class BoardRepository : ITodoRepository<BoardModel>
     }
     public List<BoardModel> List(int OwnerId)
     {
-        return (List<BoardModel>)context.Boards.ToList().Where((B) => B.Owner == OwnerId);
+        return context.Boards.ToList().FindAll((B) => B.Owner == OwnerId);
     }
 
     public BoardModel Update(BoardModel Board)

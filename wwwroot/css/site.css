@@ -117,3 +117,19 @@ form {
     border-color: var(--purple);
   }
 }
+
+.btn-primary {
+  background-color: var(--purple);
+
+  &:hover {
+    filter: brightness(0.8);
+    background-color: var(--purple);
+  }
+  &:focus {
+    outline-color: var(--purple);
+  }
+}
+
+.active {
+  color: var(--purple);
+}

@@ -9,73 +9,63 @@ namespace todo.Controllers;
 public class TaskController : Controller
 {
     private readonly ILogger<TaskController> _logger;
-    private readonly UserRepository _AuthorRepository;
     private readonly TaskRepository _TaskRepository;
+    private readonly BoardRepository _BoardRepository;
 
-    public TaskController(ITodoRepository<TaskModel> taskRepository, ITodoRepository<UserModel> authorRepository, ILogger<TaskController> logger)
+    public TaskController(ITodoRepository<BoardModel> boardRepository, ITodoRepository<TaskModel> taskRepository, ILogger<TaskController> logger)
     {
         _logger = logger;
+        _BoardRepository = (BoardRepository)boardRepository;
         _TaskRepository = (TaskRepository)taskRepository;
-        _AuthorRepository = (UserRepository)authorRepository;
     }
 
-    public IActionResult Index(int author)
+    [HttpGet("Tasks/{board}")]
+    public IActionResult Index(int board)
     {
-        var User = _AuthorRepository.Read(author);
-        User.Tasks = _TaskRepository.List(User.Id);
+        var Board = _BoardRepository.Read(board);
+        Board.Tasks = _TaskRepository.List(Board.Id);
 
-        if (TempData.TryGetValue("selected_task", out object? task))
+        return View(Board);
+    }
+
+    [HttpGet("Task/Create/{board}")]
+    public IActionResult Create(int board)
+    {
+        if (TempData.TryGetValue("Error", out object? error))
         {
-            ViewBag.SelectedTask = _TaskRepository.Read((int?)task ?? 0);
+            ViewBag.Error = error;
         }
+        ViewBag.Board = _BoardRepository.Read(board);
 
-        return View(User);
-    }
-
-    public IActionResult Create(int author)
-    {
-        ViewBag.UserName = _AuthorRepository.Read(author).Name;
-        ViewBag.UserId = author;
         return View();
     }
 
-    [HttpPost]
-    public IActionResult Create(TaskModel Task)
-    {
-        Task = _TaskRepository.Create(Task);
-        return RedirectToAction("Index", new { author = Task.AuthorId });
-    }
-
-    public IActionResult Update(int task)
-    {
-        var Task = _TaskRepository.Read(task);
-        ViewBag.UserName = _AuthorRepository.Read(Task.AuthorId).Name;
-
-        return View(Task);
-    }
-
-    [HttpPost]
-    public IActionResult Update(TaskModel Task)
+    [HttpPost("Task/Create")]
+    public IActionResult Create([FromForm] TaskModel Task)
     {
         if (ModelState.IsValid)
         {
-            Task = _TaskRepository.Update(Task);
-            return RedirectToAction("Index", new { author = Task.AuthorId });
+            Task = _TaskRepository.Create(Task);
+            return RedirectToAction("Index", new { board = Task.BoardId });
         }
 
-        return View(Task);
+        TempData["Error"] = "Preencha todos os campos.";
+
+        return RedirectToAction("Create", new { board = Task.BoardId });
     }
 
-    public RedirectToActionResult Select(int task)
+    [HttpPost("Task/Delete")]
+    public IActionResult Delete([FromForm] int board, [FromForm] int task)
     {
-        TempData["selected_task"] = task;
-        return RedirectToAction("Index", new { author = _TaskRepository.Read(task).AuthorId });
-    }
-
-    public IActionResult Delete(int task)
-    {
-        ViewBag.Error = _TaskRepository.Delete(task) ? null : "Não foi possível deletar a tarefa";
-        return RedirectToAction("Index");
+        if (_TaskRepository.Read(task).BoardId == board)
+        {
+            ViewBag.Error = _TaskRepository.Delete(task) ? null : "Não foi possível deletar a tarefa";
+        }
+        else
+        {
+            ViewBag.Error = "A tarefa não refere-se ao quadro correto";
+        }
+        return RedirectToAction("Index", new { board });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

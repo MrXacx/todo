@@ -4,6 +4,10 @@ html {
   font-size: 14px;
 }
 
+:root {
+  --purple: #7a3cf4;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -34,7 +38,7 @@ body {
 }
 
 .app-name span {
-  color: #7a3cf4;
+  color: var(--purple);
 }
 
 .card-img-top {
@@ -83,5 +87,33 @@ main > .container-fluid {
   }
   .card {
     margin: 0.75rem 0;
+  }
+}
+
+.task-form {
+  padding: 2rem 1rem;
+  .form-control {
+    box-shadow: none;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  & textarea {
+    resize: vertical;
+    min-height: 270px;
+    max-height: 270px;
+  }
+}
+
+form {
+  button {
+    background-color: var(--purple);
+  }
+
+  .form-control {
+    border-color: var(--purple);
   }
 }

@@ -7,16 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class TaskModel : IModel
 {
 
-    [ForeignKey(nameof(UserModel))]
-    public required int AuthorId { get; set; }
+    [ForeignKey(nameof(BoardModel))]
+    public required int BoardId { get; set; }
 
     public DateTime Date { get; set; } = DateTime.Now;
 
-    [MinLength(3)]
-    [MaxLength(30)]
-    public required string Title { get; set; }
-
     [MinLength(10)]
     [MaxLength(300)]
-    public required string Text { get; set; }
+    public required string Content { get; set; }
 }

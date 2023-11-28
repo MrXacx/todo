@@ -19,5 +19,5 @@ public class UserModel : IModel
     [MaxLength(35)]
     public required string Password { get; set; }
 
-    public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
+    public List<BoardModel> Boards { get; set; } = new List<BoardModel>();
 }

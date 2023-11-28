@@ -17,7 +17,7 @@ builder.Services.AddDbContext<TodoContext>(opt =>
 builder.Services.AddScoped<ITodoRepository<UserModel>, UserRepository>();
 builder.Services.AddScoped<ITodoRepository<TaskModel>, TaskRepository>();
 builder.Services.AddScoped<ITodoRepository<BoardModel>, BoardRepository>();
-builder.Services.AddScoped<ITodoRepository<AuthorizedAcessModel>, AuthorizedAcessRepository>();
+builder.Services.AddScoped<ITodoRepository<AuthorizedAccessModel>, AuthorizedAccessRepository>();
 
 builder.Services.AddSession();
 builder.Services.AddSingleton<ITempDataProvider, SessionStateTempDataProvider>();

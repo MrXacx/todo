@@ -5,22 +5,27 @@
 	int TaskCounter = 0;
 }
 
+
 <nav class="nav mb-3">
-	<span class="nav-link disabled" aria-disabled="true">Olá, @ViewBag.UserName!</span>
-	<a class="nav-link active" asp-controller="Task" asp-action="Create" asp-route-author="@Model.Id">Nova Tarefa</a>
-	<a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-id="@Model.Id">Suas Tarefas</a>
+	<span class="nav-link disabled" aria-disabled="true">@Model.Title</span>
+	<a class="nav-link active" asp-controller="Dashboard" asp-action="Index" asp-route-owner="@Model.Owner">Quadros</a>
+	<a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-board="@Model.Id">Suas
+		Tarefas</a>
+	<a class="nav-link active" asp-controller="Task" asp-action="Create" asp-route-board="@Model.Id">Nova
+		Tarefa</a>
 </nav>
 
-<section class="row">
+<section class="row justify-content-center">
 	@foreach (TaskModel Task in Model.Tasks)
 	{
-		<div class="card mx-1" style="width: 18rem;">
-			<div class="card-body">
-				<h5 class="card-title">#@($"{TaskCounter}")</h5>
+		<div class="card mx-2 my-3" style="width: 18rem;">
+			<form class="card-body" asp-controller="Task" asp-action="Delete">
+				<h5 class="card-title">#@($"{++TaskCounter}")</h5>
 				<p class="card-text">@Task.Content</p>
-				<a class="btn btn-danger" type="button" asp-controller="Task" asp-action="Delete"
-					vasp-route-task="@Task.Id">Finalizar</a>
-			</div>
+				<input type="hidden" name="task" value="@Task.Id" />
+				<input type="hidden" name="board" value="@Model.Id" />
+				<button class="btn btn-primary" type="submit">Finalizar</button>
+			</form>
 		</div>
 	}
 </section>

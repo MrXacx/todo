@@ -1,6 +1,6 @@
 @model BoardModel
 @{
-    ViewBag.Title = "Novo Quadro";
+    ViewBag.Title = "Adicionar Leitor";
 }
 
 <nav class="nav mb-3">
@@ -12,7 +12,7 @@
 </nav>
 
 <div class="modal-dialog">
-    <form class="task-form modal-content" action="/Board/Create" method="post">
+    <form class="task-form modal-content" action="/Board/Subscribe" method="post">
         @if (ViewBag.Error != null)
         {
             <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
@@ -20,15 +20,10 @@
                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
-        <input type="hidden" asp-for="Owner" value="@ViewBag.User.Id" />
-        <div class="form-floating mb-3">
-            <input id="titleInput" class="form-control" asp-for="Title" placeholder="Título da tarefa" />
-            <label for="titleInput">Título do Quadro</label>
-        </div>
+        <input type="hidden" name="board" value="@Model.Id" />
         <div class="form-floating">
-            <textarea id="descriptionInput" class="modal-body form-control" asp-for="Description"
-                placeholder="Descreva sua tarefa aqui."></textarea>
-            <label for="descriptionInput">Descrição do Quadro</label>
+            <input id="emailInput" class="form-control" name="user" type="email" placeholder="Email do Leitor" />
+            <label for="emailInput">Email do Leitor</label>
         </div>
 
         <button type="submit" class="btn btn-primary btn-lg">Criar</button>

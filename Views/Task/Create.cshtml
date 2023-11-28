@@ -4,13 +4,18 @@
 }
 
 <nav class="nav mb-3">
-    <span class="nav-link disabled" aria-disabled="true">Olá, @ViewBag.UserName!</span>
-    <a class="nav-link active" asp-controller="Task" asp-action="Create">Nova Tarefa</a>
-    <a class="nav-link active" href="/h/@ViewBag.UserId">Suas Tarefas</a>
+    <span class="nav-link disabled" aria-disabled="true">@ViewBag.Board.Title</span>
+    <a class="nav-link active" asp-controller="Dashboard" asp-action="Index"
+        asp-route-owner="@ViewBag.Board.Owner">Quadros</a>
+    <a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-board="@ViewBag.Board.Id">Suas
+        Tarefas</a>
+    <a class="nav-link active" asp-controller="Task" asp-action="Create" asp-route-board="@ViewBag.Board.Id">Nova
+        Tarefa</a>
 </nav>
 
+
 <div class="modal-dialog">
-    <form class="task-form modal-content" asp-controller="Task" asp-action="Create" method="post">
+    <form class="task-form modal-content" action="/Task/Create" method="post">
         @if (ViewBag.Error != null)
         {
             <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
@@ -18,7 +23,7 @@
                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
-        <input type="hidden" asp-for="BoardId" value="@ViewBag.BoardId" />
+        <input type="hidden" asp-for="BoardId" value="@ViewBag.Board.Id" />
         <div class="form-floating">
             <textarea class="modal-body form-control" asp-for="Content"
                 placeholder="Descreva sua tarefa aqui."></textarea>

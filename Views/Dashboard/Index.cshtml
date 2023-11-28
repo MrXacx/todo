@@ -1,0 +1,27 @@
+@model UserModel
+
+@{
+	ViewData["Title"] = "Dashboard";
+	int BoardCounter = 0;
+}
+
+<nav class="nav mb-3">
+	<span class="nav-link disabled" aria-disabled="true">Olá, @Model.Name!</span>
+	<a class="nav-link active" asp-controller="Task" asp-action="Create" asp-route-author="@Model.Id">Novo Quadro</a>
+	<a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-id="@Model.Id">Seus Quadros</a>
+</nav>
+
+<section class="row">
+	@foreach (BoardModel Board in Model.Boards)
+	{
+		<div class="card mx-1" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title">@Board.Title</h5>
+				<h6 class="card-subtitle mb-2 text-body-secondary">#@($"{BoardCounter}")</h6>
+				<p class="card-text">@Board.Description?.Substring(0, 35)</p>
+				<a class="btn btn-primary" type="button" asp-controller="Task" asp-action="Index"
+					asp-route-task="@Board.Id">Abrir</a>
+			</div>
+		</div>
+	}
+</section>

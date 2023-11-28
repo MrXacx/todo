@@ -1,0 +1,34 @@
+@model BoardModel
+@{
+    ViewBag.Title = "Novo Quadro";
+}
+
+<nav class="nav mb-3">
+    <span class="nav-link disabled" aria-disabled="true">Olá, @ViewBag.UserName!</span>
+    <a class="nav-link active" asp-controller="Task" asp-action="Create" asp-route-author="@Model.Id">Novo Quadro</a>
+    <a class="nav-link active" asp-controller="Task" asp-action="Index" asp-route-id="@Model.Id">Seus Quadros</a>
+</nav>
+
+<div class="modal-dialog">
+    <form class="task-form modal-content" asp-controller="Dashboard" asp-action="Create" method="post">
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                <span>@ViewBag.Error</span>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <input type="hidden" asp-for="Owner" value="@ViewBag.OwnerId" />
+        <div class="form-floating mb-3">
+            <input id="titleInput" class="form-control" asp-for="Title" placeholder="Título da tarefa" />
+            <label for="titleInput">Título do Quadro</label>
+        </div>
+        <div class="form-floating">
+            <textarea id="descriptionInput" class="modal-body form-control" asp-for="Description"
+                placeholder="Descreva sua tarefa aqui."></textarea>
+            <label for="descriptionInput">Descrição da Tarefa</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Criar</button>
+    </form>
+</div>

@@ -115,14 +115,22 @@ public class DashboardController : Controller
             var Board = _BoardRepository.Read(board);
             try
             {
-                var User = _AuthorRepository.ReadEmail(user);
-                _AuthAccessdRepository.Create(
-                    new AuthorizedAccessModel
-                    {
-                        User = User.Id,
-                        Board = Board.Id,
-                    }
-                );
+                var UserId = _AuthorRepository.ReadEmail(user);
+
+                if (UserId != Board.Owner)
+                {
+                    _AuthAccessdRepository.Create(
+                        new AuthorizedAccessModel
+                        {
+                            User = UserId,
+                            Board = Board.Id,
+                        }
+                    );
+                }
+                else
+                {
+                    ViewBag.Error = "Você não pode ser adicionado à lista de leitores";
+                }
             }
             catch (NoContentRetrieveException)
             {

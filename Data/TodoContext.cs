@@ -10,7 +10,7 @@ public class TodoContext : DbContext
     public DbSet<UserModel> Users { get; set; }
     public DbSet<TaskModel> Tasks { get; set; }
     public DbSet<BoardModel> Boards { get; set; }
-    public DbSet<AuthorizedAcessModel> AuthAcesss { get; set; }
+    public DbSet<AuthorizedAccessModel> AuthAcesss { get; set; }
 
 
 }

@@ -19,22 +19,38 @@ namespace todo.Migrations
                 .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("todo.Models.TaskModel", b =>
+            modelBuilder.Entity("todo.Models.AuthorizedAcessModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("Board")
+                        .HasColumnType("int");
+
+                    b.Property<int>("User")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuthAcesss");
+                });
+
+            modelBuilder.Entity("todo.Models.BoardModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)");
+
+                    b.Property<int>("Owner")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -47,6 +63,33 @@ namespace todo.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserModelId");
+
+                    b.ToTable("Boards");
+                });
+
+            modelBuilder.Entity("todo.Models.TaskModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BoardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BoardModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardModelId");
 
                     b.ToTable("Tasks");
                 });
@@ -78,16 +121,28 @@ namespace todo.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("todo.Models.TaskModel", b =>
+            modelBuilder.Entity("todo.Models.BoardModel", b =>
                 {
                     b.HasOne("todo.Models.UserModel", null)
-                        .WithMany("Tasks")
+                        .WithMany("Boards")
                         .HasForeignKey("UserModelId");
+                });
+
+            modelBuilder.Entity("todo.Models.TaskModel", b =>
+                {
+                    b.HasOne("todo.Models.BoardModel", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("BoardModelId");
+                });
+
+            modelBuilder.Entity("todo.Models.BoardModel", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("todo.Models.UserModel", b =>
                 {
-                    b.Navigation("Tasks");
+                    b.Navigation("Boards");
                 });
 #pragma warning restore 612, 618
         }

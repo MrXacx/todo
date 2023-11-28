@@ -26,15 +26,14 @@ public class TaskRepository : ITodoRepository<TaskModel>
     }
     public List<TaskModel> List(int AuthorId)
     {
-        return context.Tasks.ToList().FindAll((Task) => Task.AuthorId == AuthorId);
+        return context.Tasks.ToList();
     }
 
     public TaskModel Update(TaskModel Task)
     {
         var RetrievedTask = Read(Task.Id);
 
-        RetrievedTask.Title = Task.Title;
-        RetrievedTask.Text = Task.Text;
+        RetrievedTask.Content = Task.Content;
         RetrievedTask.Date = Task.Date;
 
         context.Tasks.Update(RetrievedTask);

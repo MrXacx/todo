@@ -9,9 +9,7 @@
 	<a class="nav-link active" href="#">Seus Quadros</a>
 	<a class="nav-link active" asp-controller="Dashboard" asp-action="Create" asp-route-owner="@Model.Id">Novo
 		Quadro</a>
-	<a class="nav-link active" asp-controller="Dashboard" asp-action="Create" asp-route-owner="@Model.Id">Adicionar
-		Leitor</a>
-	<a class="nav-link active" asp-controller="Dashboard" asp-action="Create" asp-route-owner="@Model.Id">Sair</a>
+	<a class="nav-link active" asp-controller="Sign" asp-action="LogOut" asp-route-id="@Model.Id">Sair</a>
 </nav>
 
 @if (ViewBag.Error != null)
@@ -21,6 +19,8 @@
 		<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 }
+
+<h1>Seus Quadros</h1>
 <section class="row">
 	@foreach (BoardModel Board in Model.Boards)
 	{
@@ -31,9 +31,17 @@
 					<div class="dropdown">
 						<i class="fa-solid fa-ellipsis" data-bs-toggle="dropdown" aria-expanded="false"></i>
 						<ul class="dropdown-menu">
+							<li><a class="nav-link active" asp-controller="Dashboard" asp-action="Subscribe"
+									asp-route-board="@Board.Id">Adicionar
+									Leitor</a></li>
 							<li><a class="dropdown-item" asp-controller="Dashboard" asp-action="Update"
 									asp-route-board="@Board.Id">Atualizar</a></li>
-							<li><button class="dropdown-item" href="#">Deletar</button></li>
+							<li>
+								<form action="/Board/Delete" method="post">
+									<input type="hidden" name="board" value="@Board.Id" />
+									<button class="dropdown-item" type="submit">Deletar</button>
+								</form>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -44,3 +52,21 @@
 		</div>
 	}
 </section>
+
+@if (ViewBag.ViewerBoard?.Count > 0)
+{
+	<h1>Convites</h1>
+	<section class="row">
+		@foreach (BoardModel Board in ViewBag.ViewerBoard)
+		{
+			<div class="card col-3 mx-2 my-3" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title">@Board.Title</h5>
+					<p class="card-text">@Board.Description</p>
+					<a class="btn btn-primary btn-sm" role="button" asp-controller="Task" asp-action="Index"
+						asp-route-board="@Board.Id">Consultar Tarefas</a>
+				</div>
+			</div>
+		}
+	</section>
+}

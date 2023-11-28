@@ -11,12 +11,22 @@ public class TaskController : Controller
     private readonly ILogger<TaskController> _logger;
     private readonly TaskRepository _TaskRepository;
     private readonly BoardRepository _BoardRepository;
+    private readonly AuthorizedAccessRepository _AuthAccessdRepository;
+    private readonly UserRepository _UserRepository;
 
-    public TaskController(ITodoRepository<BoardModel> boardRepository, ITodoRepository<TaskModel> taskRepository, ILogger<TaskController> logger)
+    public TaskController(
+        ITodoRepository<BoardModel> boardRepository,
+        ITodoRepository<TaskModel> taskRepository,
+        ITodoRepository<AuthorizedAccessModel> authAccessRepository,
+        ITodoRepository<UserModel> userRepository,
+        ILogger<TaskController> logger
+    )
     {
         _logger = logger;
         _BoardRepository = (BoardRepository)boardRepository;
         _TaskRepository = (TaskRepository)taskRepository;
+        _AuthAccessdRepository = (AuthorizedAccessRepository)authAccessRepository;
+        _UserRepository = (UserRepository)userRepository;
     }
 
     [HttpGet("Tasks/{board}")]
@@ -24,6 +34,12 @@ public class TaskController : Controller
     {
         var Board = _BoardRepository.Read(board);
         Board.Tasks = _TaskRepository.List(Board.Id);
+
+        _AuthAccessdRepository.ListViewers(Board.Id).ForEach((Access) =>
+        {
+            var Viewer = _UserRepository.Read(Access.User);
+            Board.Viewers.Add(Viewer);
+        });
 
         return View(Board);
     }
@@ -35,7 +51,15 @@ public class TaskController : Controller
         {
             ViewBag.Error = error;
         }
-        ViewBag.Board = _BoardRepository.Read(board);
+        var Board = _BoardRepository.Read(board);
+        _AuthAccessdRepository.ListViewers(Board.Id).ForEach((Access) =>
+      {
+          var Viewer = _UserRepository.Read(Access.User);
+          Board.Viewers.Add(Viewer);
+      });
+
+        ViewBag.Board = Board;
+
 
         return View();
     }

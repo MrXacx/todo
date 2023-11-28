@@ -11,6 +11,22 @@
         Tarefas</a>
     <a class="nav-link active" asp-controller="Task" asp-action="Create" asp-route-board="@ViewBag.Board.Id">Nova
         Tarefa</a>
+
+    <div class="btn-group">
+        <a class="nav-link active dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Leitores
+        </a>
+
+        <ul class="dropdown-menu">
+            @foreach (UserModel Viewer in ViewBag.Board.Viewers)
+            {
+                <li><span class="dropdown-item">@Viewer.Name</span></li>
+            }
+        </ul>
+    </div>
+
+    <a class="nav-link active" asp-controller="Dashboard" asp-action="Subscribe" asp-route-board="@ViewBag.Board.Id">Adicionar
+        Leitor</a>
 </nav>
 
 

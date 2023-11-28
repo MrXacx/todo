@@ -65,6 +65,12 @@ public class SignController : Controller
         return View();
     }
 
+    [HttpGet("LogOut/{id}")]
+    public IActionResult LogOut(int id)
+    {
+        return RedirectToAction("Index", "Home");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

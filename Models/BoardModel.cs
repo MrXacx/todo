@@ -19,4 +19,6 @@ public class BoardModel : IModel
     public string? Description { get; set; }
 
     public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
+
+    public List<UserModel> Viewers { get; set; } = new List<UserModel>();
 }

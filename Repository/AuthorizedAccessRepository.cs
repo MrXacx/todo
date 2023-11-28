@@ -25,7 +25,11 @@ public class AuthorizedAccessRepository : ITodoRepository<AuthorizedAccessModel>
         return context.AuthAcesss.FirstOrDefault((AuthAcess) => AuthAcess.Id == Id) ?? throw new NoContentRetrieveException();
     }
 
-    public List<AuthorizedAccessModel> List(int BoardId)
+    public List<AuthorizedAccessModel> List(int UserId)
+    {
+        return context.AuthAcesss.ToList().FindAll((A) => A.User == UserId);
+    }
+    public List<AuthorizedAccessModel> ListViewers(int BoardId)
     {
         return context.AuthAcesss.ToList().FindAll((A) => A.Board == BoardId);
     }

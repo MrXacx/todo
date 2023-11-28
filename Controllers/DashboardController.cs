@@ -29,9 +29,25 @@ public class DashboardController : Controller
     public IActionResult Index(int owner)
     {
         var User = _AuthorRepository.Read(owner);
+
         User.Boards = _BoardRepository.List(User.Id);
 
+        var ViewerBoard = new List<BoardModel>();
+
+        _AuthAccessdRepository.List(owner).ForEach((Access) =>
+        {
+            try
+            {
+                var Board = _BoardRepository.Read(Access.Board);
+                ViewerBoard.Add(Board);
+            }
+            catch (NoContentRetrieveException) { }
+        });
+
+        ViewBag.ViewerBoard = ViewerBoard;
+
         return View(User);
+
     }
 
     [HttpGet("Board/Create/{owner}")]
@@ -93,21 +109,39 @@ public class DashboardController : Controller
         return RedirectToAction("Update", new { board = Board.Id });
     }
 
-    [HttpGet("Board/Delete/{board}")]
-    public IActionResult Delete(int board)
+    [HttpPost("Board/Delete")]
+    public IActionResult Delete([FromForm] int board)
     {
-        ViewBag.Error = _BoardRepository.Delete(board) ? null : "Não foi possível deletar o quadro";
-        return RedirectToAction("Index");
+        try
+        {
+            var owner = _BoardRepository.Read(board).Owner;
+            TempData["Error"] = _BoardRepository.Delete(board) ? null : "Não foi possível deletar o quadro";
+            return RedirectToAction("Index", new { owner });
+        }
+        catch (NoContentRetrieveException)
+        {
+            TempData["Error"] = "Quadro não encontrado";
+        }
+
+        return RedirectToAction("In", "Sign");
     }
 
     [HttpGet("Board/Subscribe/{board}")]
     public IActionResult Subscribe(int board)
     {
         var Board = _BoardRepository.Read(board);
+        ViewBag.User = _AuthorRepository.Read(
+            Board.Owner
+        );
+
+        if (TempData.TryGetValue("Error", out object error))
+        {
+            ViewBag.Error = error;
+        }
         return View(Board);
     }
 
-    [HttpGet("Board/Subscribe")]
+    [HttpPost("Board/Subscribe")]
     public IActionResult Subscribe([FromForm] int board, [FromForm] string user)
     {
         try
@@ -129,20 +163,20 @@ public class DashboardController : Controller
                 }
                 else
                 {
-                    ViewBag.Error = "Você não pode ser adicionado à lista de leitores";
+                    TempData["Error"] = "Você não pode ser adicionado à lista de leitores";
                 }
             }
             catch (NoContentRetrieveException)
             {
-                ViewBag.Error = "Email não encontrado.";
+                TempData["Error"] = "Email não encontrado.";
             }
 
-            return View(Board);
+            return RedirectToAction("Subscribe", new { board });
         }
         catch (NoContentRetrieveException)
         {
-            ViewBag.Error = "Quadro não encontrado";
-            return RedirectToAction("Index", new { owner = 1 });
+            TempData["Error"] = "Quadro não encontrado";
+            return RedirectToAction("Index", "Home");
         }
     }
 

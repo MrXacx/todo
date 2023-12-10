@@ -13,10 +13,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::all()->each(fn(User $user) => User::destroy($user->id));
-        User::create([
-            "name"=> "Adonis Salamago",
-            "email"=> "adonis@contato.com",
-            "password"=> bcrypt("12345678"),
-        ]);
+        User::factory(5)->create();
     }
 }
